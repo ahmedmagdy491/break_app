@@ -19,7 +19,7 @@ const reseller = require('./api/routes/reseller/reseller.route');
 const resellerStatistics = require('./api/routes/reseller/reseller.statistics.route');
 const search = require('./api/routes/search.route');
 
-app.use(cors());
+app.use(cors('*'));
 process.env.NODE_ENV !== 'prod' && app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -28,7 +28,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
  *    ?UseRoutes
  *========================**/
 app.get('/', (req, res) => {
-	res.send('hello there!');
+	res.send('hello there!!');
 });
 app.use('/api/v1/users', users);
 app.use('/api/v1/statistics/users', usersStatistics);
