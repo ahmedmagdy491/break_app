@@ -27,6 +27,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 /**======================
  *    ?UseRoutes
  *========================**/
+app.get('/', (req, res) => {
+	res.send('hello there!');
+});
 app.use('/api/v1/users', users);
 app.use('/api/v1/statistics/users', usersStatistics);
 app.use('/api/v1/rooms', rooms);
@@ -37,7 +40,6 @@ app.use('/api/v1/statistics/agency', agencyStatistics);
 app.use('/api/v1/reseller', reseller);
 app.use('/api/v1/statistics/reseller', resellerStatistics);
 app.use('/api/v1/search', search);
-
 /**======================
  *    ?Hanle DB Errors
  *========================**/
