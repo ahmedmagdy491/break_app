@@ -167,6 +167,10 @@ class UserDAO {
 	static addUser(userInfo) {
 		return new Promise(async (resolve, reject) => {
 			try {
+				const user = await User.findOne({ email: userInfo.email });
+				if (user) {
+					reject(new Error('this email in use'));
+				}
 				resolve(await User.create({ ...userInfo, _id: idGenerator() }));
 			} catch (error) {
 				reject(error);
