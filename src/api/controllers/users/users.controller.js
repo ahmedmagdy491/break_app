@@ -50,7 +50,9 @@ class UserController {
 			let userFromBody = req.body;
 
 			const registerResult = await UserDAO.addUser(userFromBody);
+			const user = new User(registerResult);
 			res.status(201).json({
+				auth_token: user.encoded(),
 				resutl: {
 					name: `${registerResult.first_name} ${registerResult.last_name}`,
 					email: registerResult.email,
