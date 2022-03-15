@@ -13,7 +13,7 @@ const Multer = multer({
 	storage: multer.memoryStorage(),
 	limits: 1024 * 1024,
 });
-
+router.route('/getUsers').get(auth, UserController.getUsers);
 router
 	.route('/uploadAvatar')
 	.post(Multer.single('avatar'), uploadImage, (req, res) => {
@@ -48,8 +48,6 @@ router
 
 router.route('/get_followers').get(auth, UserController.getFollowers);
 
-// router.route('/add_visit').post(auth, UserController.addVisitor);
-
 router.route('/buy_product').post(auth, UserController.buyProduct);
 
 router.route('/send_gift').post(auth, UserController.sendGift);
@@ -58,13 +56,8 @@ router.route('/convert_currence').post(auth, UserController.convertCurrence);
 
 router.route('/getUserProfile').get(auth, UserController.getUserProfile);
 
-router
-	.route('/updateProfile')
-	.put(
-		auth,
-		(req, res, next) => cleanCache(`user_profile=${req.user.id}`, next),
-		UserController.updateProfile
-	);
+router.route('/updateProfile').put(auth, UserController.updateProfile);
+router.route('/updateUser/:userId').put(auth, UserController.updateUser);
 router.route('/getMyProfile').get(auth, UserController.getMyProfile);
 
 module.exports = router;

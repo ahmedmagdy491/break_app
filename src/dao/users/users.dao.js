@@ -7,6 +7,7 @@ const idGenerator = require('../../api/helpers/idGenerator');
 const checkDataExist = require('../../api/helpers/notFoundData');
 const verifyUpdates = require('../../api/helpers/verifyUpdates');
 const { Transfers } = require('../../schemas/transfers.schema');
+const { checkUpdated } = require('../../api/helpers/checkUpdated');
 
 class UserDAO {
 	/**-----------------------
@@ -27,6 +28,30 @@ class UserDAO {
 		} catch (error) {
 			Promise.reject(error);
 		}
+	}
+
+	static getUsers(page, limit) {
+		return new Promise(async (resolve, reject) => {
+			try {
+				const users = await User.aggregate([
+					{ $match: { role: 'user' } },
+					{
+						$project: {
+							first_name: 1,
+							last_name: 1,
+							email: 1,
+							isActive: 1,
+							gender: 1,
+						},
+					},
+					{ $skip: (page - 1) * limit },
+					{ $limit: parseInt(limit) },
+				]);
+				resolve(users);
+			} catch (error) {
+				reject(error);
+			}
+		});
 	}
 
 	static getUserById(userId) {
@@ -167,10 +192,6 @@ class UserDAO {
 	static addUser(userInfo) {
 		return new Promise(async (resolve, reject) => {
 			try {
-				const user = await User.findOne({ email: userInfo.email });
-				if (user) {
-					reject(new Error('this email in use'));
-				}
 				resolve(await User.create({ ...userInfo, _id: idGenerator() }));
 			} catch (error) {
 				reject(error);
@@ -230,6 +251,7 @@ class UserDAO {
 					'password',
 					'avatar',
 					'phone',
+					'isActive',
 				];
 
 				const updateResult = await User.updateOne(

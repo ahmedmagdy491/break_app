@@ -50,9 +50,7 @@ class UserController {
 			let userFromBody = req.body;
 
 			const registerResult = await UserDAO.addUser(userFromBody);
-			const user = new User(registerResult);
 			res.status(201).json({
-				auth_token: user.encoded(),
 				resutl: {
 					name: `${registerResult.first_name} ${registerResult.last_name}`,
 					email: registerResult.email,
@@ -108,6 +106,17 @@ class UserController {
 			next(error);
 		}
 	}
+
+	static async getUsers(req, res, next) {
+		try {
+			const page = req.query.page;
+			const limit = req.query.limit;
+			const result = await UserDAO.getUsers(page, limit);
+			res.send(result);
+		} catch (error) {
+			next(error);
+		}
+	}
 	static async getUserProfile(req, res, next) {
 		try {
 			const profileResult = await UserDAO.getUserProfile({
@@ -134,6 +143,19 @@ class UserController {
 		try {
 			const profileResult = await UserDAO.updateProfile(
 				req.user.id,
+				req.body
+			);
+
+			res.json(profileResult);
+		} catch (error) {
+			next(error);
+		}
+	}
+
+	static async updateUser(req, res, next) {
+		try {
+			const profileResult = await UserDAO.updateProfile(
+				req.params.userId,
 				req.body
 			);
 
