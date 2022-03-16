@@ -37,7 +37,20 @@ class AgencyDAO {
 	 *  join Agency -- {AgencyId, userId}
 	 *  leave Agency -- {AgencyId, userId}
 	 *------------------------**/
-
+	static getAll(page, limit) {
+		return new Promise(async (resolve, reject) => {
+			try {
+				const result = await Agency.aggregate([
+					{ $skip: (page - 1) * limit },
+					{ $limit: limit },
+				]);
+				const count = await Agency.countDocuments();
+				resolve({ agencies: result, agenciesCount: count });
+			} catch (error) {
+				reject(error);
+			}
+		});
+	}
 	static createAgnecy(agencyInfo) {
 		return new Promise(async (resolve, reject) => {
 			try {

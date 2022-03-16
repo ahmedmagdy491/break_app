@@ -54,6 +54,7 @@ class UserController {
 			res.status(201).json({
 				auth_token: token.encoded(),
 				resutl: {
+					_id: registerResult._id,
 					name: `${registerResult.first_name} ${registerResult.last_name}`,
 					email: registerResult.email,
 					avatar: registerResult.avatar,
@@ -113,7 +114,8 @@ class UserController {
 		try {
 			const page = req.query.page;
 			const limit = req.query.limit;
-			const result = await UserDAO.getUsers(page, limit);
+			const role = req.body.role;
+			const result = await UserDAO.getUsers({ page, limit, role });
 			res.send(result);
 		} catch (error) {
 			next(error);

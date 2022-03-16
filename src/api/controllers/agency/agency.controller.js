@@ -98,6 +98,17 @@ class AgencyController {
 			next(error);
 		}
 	}
+
+	static async getAllAgencies(req, res, next) {
+		try {
+			const page = req.query?.page;
+			const limit = parseInt(req.query?.limit);
+			const result = await AgencyDAO.getAll(page, limit);
+			res.send(result);
+		} catch (error) {
+			next(error);
+		}
+	}
 }
 
 module.exports = AgencyController;

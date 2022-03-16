@@ -8,6 +8,8 @@ const { catchValidationError } = require('../../middlewares/validationError');
 
 const router = Router();
 
+router.route('/getAll').get(auth, AgencyController.getAllAgencies);
+
 router.route('/create').post(
 	validate('createGroup'),
 	catchValidationError,

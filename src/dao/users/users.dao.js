@@ -30,11 +30,11 @@ class UserDAO {
 		}
 	}
 
-	static getUsers(page, limit) {
+	static getUsers({ page, limit, role }) {
 		return new Promise(async (resolve, reject) => {
 			try {
 				const users = await User.aggregate([
-					{ $match: { role: 'user' } },
+					{ $match: { role: role } },
 					{
 						$project: {
 							first_name: 1,
@@ -258,6 +258,7 @@ class UserDAO {
 					'avatar',
 					'phone',
 					'isActive',
+					'role',
 				];
 
 				const updateResult = await User.updateOne(
