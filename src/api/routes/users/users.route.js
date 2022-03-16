@@ -4,7 +4,7 @@ const { UserController } = require('../../controllers/users/users.controller');
 const validate = require('../../helpers/validationLayers/user.layer');
 const auth = require('../../middlewares/auth.middleware');
 const { catchValidationError } = require('../../middlewares/validationError');
-const cleanCache = require('../../middlewares/cleanCache');
+
 const router = Router();
 const multer = require('multer');
 const { uploadImage } = require('../../utils/firebase');
@@ -30,21 +30,17 @@ router.route('/delete/:id').delete(UserController.delete);
 
 router.route('/logout').post(auth, UserController.logout);
 
-router
-	.route('/follow')
-	.post(
-		auth,
-		(req, res, next) => cleanCache(`user_followers=${req.user.id}`, next),
-		UserController.FollowSomeOne
-	);
+router.route('/follow').post(
+	auth,
 
-router
-	.route('/unfollow')
-	.post(
-		auth,
-		(req, res, next) => cleanCache(`user_profile=${req.user.id}`, next),
-		UserController.UnfollowSomeOne
-	);
+	UserController.FollowSomeOne
+);
+
+router.route('/unfollow').post(
+	auth,
+
+	UserController.UnfollowSomeOne
+);
 
 router.route('/get_followers').get(auth, UserController.getFollowers);
 

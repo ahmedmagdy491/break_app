@@ -298,9 +298,7 @@ class RoomDAO {
 		];
 		return new Promise(async (resolve, reject) => {
 			try {
-				const rooms = await Room.aggregate(pipeline).cache({
-					key: req.user.id,
-				});
+				const rooms = await Room.aggregate(pipeline);
 				resolve(rooms, 'rooms');
 			} catch (error) {
 				reject(error);

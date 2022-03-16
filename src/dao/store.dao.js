@@ -39,9 +39,7 @@ class StoreDAO {
 					{ $project: { name: 1, avatar: 1 } },
 					{ $skip: (page - 1) * 2 },
 					{ $limit: 2 },
-				]).cache({
-					key: `all_categories page=${page}`,
-				});
+				]);
 				resolve(result);
 			} catch (error) {
 				reject(error);
@@ -61,9 +59,7 @@ class StoreDAO {
 					{ $match: { category: category_id } },
 					{ $skip: (page - 1) * limit },
 					{ $limit: limit },
-				]).cache({
-					key: `all_products&category=${category_id}&page=${page}`,
-				});
+				]);
 				resolve(result);
 			} catch (error) {
 				reject(error);

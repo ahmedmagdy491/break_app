@@ -3,19 +3,17 @@ const AgencyController = require('../../controllers/agency/agency.controller');
 const validate = require('../../helpers/validationLayers/agency.layer');
 
 const auth = require('../../middlewares/auth.middleware');
-var cleanCache = require('../../middlewares/cleanCache');
+
 const { catchValidationError } = require('../../middlewares/validationError');
 
 const router = Router();
 
-router
-	.route('/create')
-	.post(
-		validate('createGroup'),
-		catchValidationError,
-		(req, res, next) => cleanCache('all_groups', next),
-		AgencyController.createAgnecy
-	);
+router.route('/create').post(
+	validate('createGroup'),
+	catchValidationError,
+
+	AgencyController.createAgnecy
+);
 
 router
 	.route('/createReqJoinFromUserToAgency/:agencyId')

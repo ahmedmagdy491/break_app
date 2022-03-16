@@ -44,10 +44,12 @@ class UserDAO {
 							gender: 1,
 						},
 					},
+
 					{ $skip: (page - 1) * limit },
 					{ $limit: parseInt(limit) },
 				]);
-				resolve(users);
+				const usersCount = await User.countDocuments({ role: 'user' });
+				resolve({ users, usersCount });
 			} catch (error) {
 				reject(error);
 			}
