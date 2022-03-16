@@ -48,7 +48,7 @@ class UserDAO {
 					{ $skip: (page - 1) * limit },
 					{ $limit: parseInt(limit) },
 				]);
-				const usersCount = await User.countDocuments({ role: 'user' });
+				const usersCount = await User.countDocuments({ role });
 				resolve({ users, usersCount });
 			} catch (error) {
 				reject(error);
@@ -247,7 +247,7 @@ class UserDAO {
 		}
 	}
 
-	static updateProfile(userId, profileInfo) {
+	static updateProfile(key, profileInfo) {
 		return new Promise(async (resolve, reject) => {
 			try {
 				const whiteList = [
@@ -262,7 +262,14 @@ class UserDAO {
 				];
 
 				const updateResult = await User.updateOne(
-					{ _id: userId },
+					{
+						$expr: {
+							$or: [
+								{ $eq: ['$_id', key] },
+								{ $eq: ['$email', key] },
+							],
+						},
+					},
 					{
 						$set:
 							verifyUpdates(profileInfo, whiteList) &&

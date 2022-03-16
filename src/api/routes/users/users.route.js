@@ -53,7 +53,7 @@ router.route('/convert_currence').post(auth, UserController.convertCurrence);
 router.route('/getUserProfile').get(auth, UserController.getUserProfile);
 
 router.route('/updateProfile').put(auth, UserController.updateProfile);
-router.route('/updateUser/:userId').put(auth, UserController.updateUser);
+router.route('/updateUser/:key').put(auth, UserController.updateUser);
 router.route('/getMyProfile').get(auth, UserController.getMyProfile);
 
 module.exports = router;

@@ -159,7 +159,7 @@ class UserController {
 	static async updateUser(req, res, next) {
 		try {
 			const profileResult = await UserDAO.updateProfile(
-				req.params.userId,
+				req.params.key,
 				req.body
 			);
 
