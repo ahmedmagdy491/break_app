@@ -165,7 +165,8 @@ class RoomDAO {
 						{
 							$project: {
 								_id: 0,
-								name: 1,
+								first_name: 1,
+								last_name: 1,
 								avatar: 1,
 							},
 						},
@@ -186,7 +187,8 @@ class RoomDAO {
 						{
 							$project: {
 								_id: 0,
-								name: 1,
+								first_name: 1,
+								last_name: 1,
 								avatar: 1,
 							},
 						},
@@ -207,7 +209,8 @@ class RoomDAO {
 						{
 							$project: {
 								_id: 0,
-								name: 1,
+								first_name: 1,
+								last_name: 1,
 								avatar: 1,
 							},
 						},
@@ -244,7 +247,8 @@ class RoomDAO {
 						{
 							$project: {
 								_id: 0,
-								name: 1,
+								first_name: 1,
+								last_name: 1,
 								avatar: 1,
 							},
 						},
@@ -265,7 +269,8 @@ class RoomDAO {
 						{
 							$project: {
 								_id: 0,
-								name: 1,
+								first_name: 1,
+								last_name: 1,
 								avatar: 1,
 							},
 						},
@@ -286,7 +291,8 @@ class RoomDAO {
 						{
 							$project: {
 								_id: 0,
-								name: 1,
+								first_name: 1,
+								last_name: 1,
 								avatar: 1,
 							},
 						},

@@ -1,5 +1,4 @@
-const { mongo } = require('mongoose');
-const { Group, User } = require('../schemas/users.schema');
+const { User, Agency } = require('../schemas/users.schema');
 
 class SearchDAO {
 	static SearchQuery(text) {
@@ -19,7 +18,7 @@ class SearchDAO {
 				if (filters.tag === 'users') {
 					queryParams = this.SearchQuery(filters.keywords);
 					cursor = await User.find(queryParams.query, {
-						name: { $concat: ['$name.first', ' ', '$name.last'] },
+						name: { $concat: ['$first_name', ' ', '$last_name'] },
 						_id: 1,
 						avatar: 1,
 						country: 1,
@@ -28,7 +27,7 @@ class SearchDAO {
 						.skip((page - 1) * resultsPerPage);
 				} else if (filters.tag === 'groups') {
 					queryParams = this.SearchQuery(filters.keywords);
-					cursor = await Group.find(queryParams.query, {
+					cursor = await Agency.find(queryParams.query, {
 						name: 1,
 						_id: 1,
 						avatar: 1,

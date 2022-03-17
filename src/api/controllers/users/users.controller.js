@@ -14,7 +14,7 @@ class User {
 	}
 	toJson() {
 		return {
-			name: this.name,
+			name: `${this.first_name} ${this.last_name}`,
 			age: this.age,
 			avatar: this.avatar,
 			email: this.email,
@@ -114,7 +114,7 @@ class UserController {
 		try {
 			const page = req.query.page;
 			const limit = req.query.limit;
-			const role = req.body.role;
+			const role = req.query.role;
 			const result = await UserDAO.getUsers({ page, limit, role });
 			res.send(result);
 		} catch (error) {

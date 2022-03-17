@@ -393,7 +393,7 @@ class UserDAO {
 						_id: { $ne: user_id },
 						followings: { $in: [user_id] },
 					},
-					{ name: 1, avatar: 1 }
+					{ first_name: 1, last_name: 1, avatar: 1 }
 				);
 				resolve(getFollowersResult);
 			} catch (error) {
