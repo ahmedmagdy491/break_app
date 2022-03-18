@@ -51,6 +51,17 @@ class AgencyDAO {
 			}
 		});
 	}
+	static getAgencyById(id) {
+		return new Promise(async (resolve, reject) => {
+			try {
+				const result = await Agency.findById(id);
+				if (!result) reject(new Error('agency not found'));
+				resolve(result);
+			} catch (error) {
+				reject(error);
+			}
+		});
+	}
 	static createAgnecy(agencyInfo) {
 		return new Promise(async (resolve, reject) => {
 			try {
@@ -230,23 +241,6 @@ class AgencyDAO {
 				// find member
 				// increase his total_balance by beans
 				// increase agency total_balance by beans
-				// let store_pipeline = {
-				// 	$lookup: {
-				// 		from: 'stores',
-				// 		pipeline: [
-				// 			{ $match: { _id: giftId } },
-				// 			{ $project: { price: 1, _id: 0 } },
-				// 		],
-				// 		as: 'gift_price',
-				// 	},
-				// };
-				// let settings_pipeline = {
-				// 	$lookup: {
-				// 		from: 'settings',
-				// 		pipeline: [{ $project: { beans_golds: 1, _id: 0 } }],
-				// 		as: 'beans_golds_eq',
-				// 	},
-				// };
 
 				let merge_pipeline = {
 					$merge: {

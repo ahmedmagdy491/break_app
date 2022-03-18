@@ -22,9 +22,16 @@ class UserDAO {
      
      *------------------------**/
 
-	static async getUser(email) {
+	static async getUser(key) {
 		try {
-			return Promise.resolve(await User.findOne({ email }));
+			return Promise.resolve(
+				await User.findOne(
+					{
+						$or: [{ $eq: ['$_id', key] }, { $eq: ['$email', key] }],
+					},
+					{ password: 0 }
+				)
+			);
 		} catch (error) {
 			Promise.reject(error);
 		}
@@ -212,15 +219,15 @@ class UserDAO {
 	 * @param {string} jwt - A JSON web token representing the user's claims
 	 * @returns {DAOResponse} Returns either a "success" or an "error" Object
 	 */
-	static async loginUser(email, jwt) {
+	static async loginUser(userId, jwt) {
 		try {
 			const session = await Session.updateOne(
-				{ email },
+				{ userId },
 				{ $set: { jwt: jwt } }
 			);
 
 			if (!session.modifiedCount) {
-				await Session.create({ email, jwt });
+				await Session.create({ userId, jwt });
 				return { success: true };
 			}
 
@@ -236,10 +243,10 @@ class UserDAO {
 	 *  @param {string} email // the email of user to remove
 	 *  @returns {DAOResponse} Returns either a `success` or an `error` object
 	 *------------------------**/
-	static async logoutUser(email) {
+	static async logoutUser(userId) {
 		try {
 			// Delete the document in the `sessions` collection matching the email.
-			await Session.deleteOne({ email });
+			await Session.deleteOne({ userId });
 			return { success: true };
 		} catch (error) {
 			console.error(`Error occurred while logging out user, ${error}`);
@@ -295,10 +302,10 @@ class UserDAO {
 	 * @returns {Object | null} Returns a user session Object, an "error" Object
 	 * if something went wrong, or null if user was not found.
 	 */
-	static async getUserSession(email) {
+	static async getUserSession(userId) {
 		try {
 			// Retrieve the session document corresponding with the user's email.
-			return Session.findOne({ email });
+			return Session.findOne({ userId });
 		} catch (e) {
 			console.error(`Error occurred while retrieving user session, ${e}`);
 			return null;
@@ -313,7 +320,7 @@ class UserDAO {
 	static async deleteUser(id) {
 		try {
 			await User.findByIdAndDelete(id);
-			await Session.findByIdAndDelete(id);
+			await Session.findOneAndDelete({ userId: id });
 			if (!(await this.getUser(id)) && !(await this.getUserSession(id))) {
 				return { success: true };
 			} else {

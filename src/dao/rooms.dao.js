@@ -302,10 +302,12 @@ class RoomDAO {
 			},
 			{ $unwind: '$room_owner' },
 		];
+
 		return new Promise(async (resolve, reject) => {
 			try {
 				const rooms = await Room.aggregate(pipeline);
-				resolve(rooms, 'rooms');
+				const roomsCount = await Room.countDocuments();
+				resolve({ rooms, roomsCount });
 			} catch (error) {
 				reject(error);
 			}

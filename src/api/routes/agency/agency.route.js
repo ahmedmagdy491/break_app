@@ -17,6 +17,8 @@ router.route('/create').post(
 	AgencyController.createAgnecy
 );
 
+router.route('/getAgency/:id').get(auth, AgencyController.getAgnecyById);
+
 router
 	.route('/createReqJoinFromUserToAgency/:agencyId')
 	.put(auth, AgencyController.createReqJoinFromUserToAgency);

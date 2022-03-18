@@ -97,7 +97,7 @@ class UserController {
 				return;
 			}
 			const loginResponse = await UserDAO.loginUser(
-				user.email,
+				user.id,
 				user.encoded()
 			);
 			if (!loginResponse.success) {
@@ -116,6 +116,14 @@ class UserController {
 			const limit = req.query.limit;
 			const role = req.query.role;
 			const result = await UserDAO.getUsers({ page, limit, role });
+			res.send(result);
+		} catch (error) {
+			next(error);
+		}
+	}
+	static async getUser(req, res, next) {
+		try {
+			const result = await UserDAO.getUser(req.params.key);
 			res.send(result);
 		} catch (error) {
 			next(error);

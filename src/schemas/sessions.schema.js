@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const sessionsSchema = new mongoose.Schema({
-	email: {
+	userId: {
 		type: String,
 		required: [true, 'this field is required'],
 	},

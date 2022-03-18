@@ -18,6 +18,15 @@ class AgencyController {
 		}
 	}
 
+	static async getAgnecyById(req, res, next) {
+		try {
+			const result = await AgencyDAO.getAgencyById(req.params.id);
+			res.json(result);
+		} catch (error) {
+			next(error);
+		}
+	}
+
 	static async createReqJoinFromUserToAgency(req, res, next) {
 		try {
 			const result = await AgencyDAO.createReqJoinFromUserToAgency(

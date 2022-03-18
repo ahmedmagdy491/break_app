@@ -55,5 +55,6 @@ router.route('/getUserProfile').get(auth, UserController.getUserProfile);
 router.route('/updateProfile').put(auth, UserController.updateProfile);
 router.route('/updateUser/:key').put(auth, UserController.updateUser);
 router.route('/getMyProfile').get(auth, UserController.getMyProfile);
+router.route('/getUser/:key').get(auth, UserController.getUser);
 
 module.exports = router;
