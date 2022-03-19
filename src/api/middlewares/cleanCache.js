@@ -5,6 +5,6 @@ const { clearHash } = require('../utils/cache');
  * 	@param {string} key the first name of the keys or key to remove
  *------------------------**/
 module.exports = async (key, next) => {
-	await next();
-	clearHash(key);
+    await next();
+    clearHash(key);
 };

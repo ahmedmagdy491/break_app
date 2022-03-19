@@ -10,37 +10,29 @@ const multer = require('multer');
 const { uploadImage } = require('../../utils/firebase');
 
 const Multer = multer({
-	storage: multer.memoryStorage(),
-	limits: 1024 * 1024,
+    storage: multer.memoryStorage(),
+    limits: 1024 * 1024,
 });
 router.route('/getUsers').get(auth, UserController.getUsers);
 router
-	.route('/uploadAvatar')
-	.post(Multer.single('avatar'), uploadImage, (req, res) => {
-		res.send({ avatarUrl: req.file.firebaseUrl });
-	});
+    .route('/uploadAvatar')
+    .post(Multer.single('avatar'), uploadImage, (req, res) => {
+        res.send({ avatarUrl: req.file.firebaseUrl });
+    });
 router
-	.route('/register')
-	.post(validate('addUser'), catchValidationError, UserController.register);
+    .route('/register')
+    .post(validate('addUser'), catchValidationError, UserController.register);
 router
-	.route('/login')
-	.post(validate('loginUser'), catchValidationError, UserController.login);
+    .route('/login')
+    .post(validate('loginUser'), catchValidationError, UserController.login);
 
 router.route('/delete/:id').delete(UserController.delete);
 
 router.route('/logout').post(auth, UserController.logout);
 
-router.route('/follow').post(
-	auth,
+router.route('/follow').post(auth, UserController.FollowSomeOne);
 
-	UserController.FollowSomeOne
-);
-
-router.route('/unfollow').post(
-	auth,
-
-	UserController.UnfollowSomeOne
-);
+router.route('/unfollow').post(auth, UserController.UnfollowSomeOne);
 
 router.route('/get_followers').get(auth, UserController.getFollowers);
 
@@ -55,6 +47,7 @@ router.route('/getUserProfile').get(auth, UserController.getUserProfile);
 router.route('/updateProfile').put(auth, UserController.updateProfile);
 router.route('/updateUser/:key').put(auth, UserController.updateUser);
 router.route('/getMyProfile').get(auth, UserController.getMyProfile);
-router.route('/getUser/:key').get(auth, UserController.getUser);
+router.route('/getUser/:email').get(auth, UserController.getUser);
+router.route('/getUserById/:id').get(auth, UserController.getUserById);
 
 module.exports = router;
