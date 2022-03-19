@@ -52,14 +52,18 @@ class UserController {
 
             const registerResult = await UserDAO.addUser(userFromBody);
             const token = new User(registerResult);
+            console.log(registerResult);
             res.status(201).json({
                 auth_token: token.encoded(),
-                resutl: {
+                info: {
                     _id: registerResult._id,
                     name: `${registerResult.first_name} ${registerResult.last_name}`,
                     email: registerResult.email,
                     avatar: registerResult.avatar,
                     golds: registerResult.wallet.golds,
+                    role: registerResult.role,
+                    age: registerResult.age,
+                    gender: registerResult.gender,
                 },
             });
         } catch (error) {
@@ -107,7 +111,20 @@ class UserController {
                 res.status(500).json({ error: loginResponse.error });
                 return;
             }
-            res.json({ auth_token: user.encoded(), info: user.toJson() });
+            console.log(loginResponse);
+            res.json({
+                auth_token: user.encoded(),
+                info: {
+                    _id: userData._id,
+                    name: userData.first_name + ' ' + userData.last_name,
+                    email: userData.email,
+                    avatar: userData.avatar,
+                    role: userData.role,
+                    age: userData.age,
+                    gender: userData.gender,
+                    golds: userData.wallet.golds,
+                },
+            });
         } catch (error) {
             next(error);
         }
