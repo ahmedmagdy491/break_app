@@ -13,4 +13,12 @@ router
   .route("/getCategoryProducts/:category_id")
   .get(StoreController.getCategoryProducts);
 
+router.route("/updateProduct/:id").put(StoreController.updateProduct);
+router.route("/deleteProduct/:id").delete(StoreController.deleteProduct);
+router.route("/getOneProduct/:id").get(StoreController.findOneProduct);
+
+router.route("/updateCategory/:id").put(StoreController.updateCategory);
+router.route("/deleteCategory/:id").delete(StoreController.deleteCategory);
+router.route("/getOneCategory/:id").get(StoreController.findOneCategory);
+
 module.exports = router;

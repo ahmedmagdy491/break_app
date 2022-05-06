@@ -60,6 +60,75 @@ class StoreController {
       next(error);
     }
   }
+
+  static async updateProduct(req, res, next) {
+    try {
+      await StoreDAO.updateProduct({
+        id: req.params.id,
+        ...req.body,
+      });
+      res.json({
+        result: "done",
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async updateCategory(req, res, next) {
+    try {
+      await StoreDAO.updateCategory({
+        id: req.params.id,
+        ...req.body,
+      });
+      res.json({
+        result: "done",
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async deleteCategory(req, res, next) {
+    try {
+      await StoreDAO.deleteCategory(req.params.id);
+      res.json({
+        result: "done",
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+  static async deleteProduct(req, res, next) {
+    try {
+      await StoreDAO.deleteProduct(req.params.id);
+      res.json({
+        result: "done",
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+  static async findOneProduct(req, res, next) {
+    try {
+      const result = await StoreDAO.findOneProduct(req.params.id);
+      res.json({
+        result,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+  static async findOneCategory(req, res, next) {
+    try {
+      const result = await StoreDAO.findOneCategory(req.params.id);
+      res.json({
+        result,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 module.exports = StoreController;

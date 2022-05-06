@@ -58,6 +58,72 @@ class StoreDAO {
     });
   }
 
+  static async updateProduct(info) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const result = await Store.updateOne({ _id: info.id }, { ...info });
+        resolve(result.modifiedCount);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+  static async deleteProduct(id) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const result = await Store.deleteOne({ _id: id });
+        resolve(result.modifiedCount);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
+  static async findOneProduct(id) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const result = await Store.findById(id);
+        resolve(result);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
+  static async updateCategory(info) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const result = await ProductCategory.updateOne(
+          { _id: info.id },
+          { ...info }
+        );
+        resolve(result.modifiedCount);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+  static async deleteCategory(id) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const result = await ProductCategory.deleteOne({ _id: id });
+        resolve(result.modifiedCount);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
+  static async findOneCategory(id) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const result = await ProductCategory.findById(id);
+        resolve(result);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
   /**
    * @param {string} category_id // the id of category
    * @param {number} page // number of page
