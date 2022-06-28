@@ -191,9 +191,7 @@ class AgencyDAO {
             },
           },
         ]);
-        if (!members.length) {
-          reject(new Error("No Members"));
-        }
+
         resolve({ result: members });
       } catch (error) {
         reject(error);

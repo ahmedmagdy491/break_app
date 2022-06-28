@@ -116,7 +116,7 @@ class AgencyController {
   static async updateAgency(req, res, next) {
     try {
       await AgencyDAO.updateAgency({ id: req.params.id, ...req.body });
-      res.send({ result: "done" });
+      res.send({ success: true });
     } catch (error) {
       next(error);
     }
@@ -124,7 +124,7 @@ class AgencyController {
   static async deleteAgency(req, res, next) {
     try {
       await AgencyDAO.deleteAgency(req.params.id);
-      res.send({ result: "done" });
+      res.send({ success: true });
     } catch (error) {
       next(error);
     }

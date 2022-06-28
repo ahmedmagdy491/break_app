@@ -21,7 +21,7 @@ const search = require("./api/routes/search.route");
 const agora = require("./api/routes/agora.route");
 const uploadAvatar = require("./api/routes/uploadAvatar.route");
 
-app.use(cors());
+app.use(cors("*"));
 process.env.NODE_ENV !== "prod" && app.use(morgan("dev"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

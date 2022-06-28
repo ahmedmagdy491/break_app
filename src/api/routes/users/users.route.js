@@ -42,7 +42,7 @@ router.route("/send_gift").post(auth, UserController.sendGift);
 
 router.route("/convert_currence").post(auth, UserController.convertCurrence);
 
-router.route("/getUserProfile").get(auth, UserController.getUserProfile);
+router.route("/getUserProfile").post(auth, UserController.getUserProfile);
 
 router.route("/updateProfile").put(auth, UserController.updateProfile);
 router.route("/updateUser/:key").put(auth, UserController.updateUser);
