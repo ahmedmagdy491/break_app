@@ -29,16 +29,16 @@ class StoreDAO {
   /**
    * @param {number} page // number of page
    **/
-  static async getCategories(page) {
+  static async getCategories({ page, limit }) {
     return new Promise(async (resolve, reject) => {
       try {
-        const limit = 10;
         const result = await ProductCategory.aggregate([
           { $project: { name: 1, avatar: 1 } },
-          { $skip: (page - 1) * 2 },
-          { $limit: 2 },
+          { $skip: (page - 1) * limit },
+          { $limit: Number(limit) },
         ]);
-        resolve(result);
+        const categoriesCount = await ProductCategory.countDocuments();
+        resolve({ result, categoriesCount });
       } catch (error) {
         reject(error);
       }

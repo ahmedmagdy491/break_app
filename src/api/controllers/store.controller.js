@@ -31,9 +31,7 @@ class StoreController {
         req.params.category_id,
         req.query.page
       );
-      res.json({
-        result,
-      });
+      res.json(result);
     } catch (error) {
       next(error);
     }
@@ -41,10 +39,11 @@ class StoreController {
 
   static async getCategories(req, res, next) {
     try {
-      const result = await StoreDAO.getCategories(req.query.page);
-      res.json({
-        result,
+      const result = await StoreDAO.getCategories({
+        page: req.query.page,
+        limit: req.query.limit,
       });
+      res.json(result);
     } catch (error) {
       next(error);
     }
@@ -112,9 +111,7 @@ class StoreController {
   static async findOneProduct(req, res, next) {
     try {
       const result = await StoreDAO.findOneProduct(req.params.id);
-      res.json({
-        result,
-      });
+      res.json(result);
     } catch (error) {
       next(error);
     }
